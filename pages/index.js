@@ -5,7 +5,7 @@ import { jsPDF } from 'jspdf';
 import { Document, Packer, Paragraph, TextRun } from 'docx';
 import { saveAs } from 'file-saver';
 
-const supabase = createClient('https://supabase.co', 'sb_publishable_wjxD_RKyMgZAglwbxtcpEw_FOMtYaxG');
+const supabase = createClient('https://arubgtsmozwieuzmjwmpsupabase.co', 'sb_publishable_wjxD_RKyMgZAglwbxtcpEw_FOMtYaxG');
 const BUY_URL = 'https://lynk.id/windigital12';
 
 const STUDIOS = [
