@@ -120,7 +120,7 @@ export default function Home() {
 
   if (loading) return <div className="flex items-center justify-center min-h-screen text-amber-400">Memuat...</div>;
 
-  if (!user) return (
+  if (false) return (
     <div className="flex items-center justify-center min-h-screen p-6 text-center">
       <div className="max-w-md w-full bg-slate-900 border border-slate-800 rounded-2xl p-8">
         <h1 className="text-2xl font-extrabold text-amber-400 mb-2">WINDIGITAL AI STUDIO</h1>
@@ -130,7 +130,7 @@ export default function Home() {
     </div>
   );
 
-  if (!approved) return (
+  if (false) return (
     <div className="flex items-center justify-center min-h-screen p-6 text-center">
       <div className="max-w-md w-full bg-slate-900 border border-red-900/50 rounded-2xl p-8">
         <h2 className="text-xl font-bold text-red-400 mb-2">Akun Belum Aktif</h2>
