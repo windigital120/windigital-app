@@ -107,27 +107,6 @@ export default function Home() {
 
   if (loading) return <div className="flex items-center justify-center min-h-screen text-amber-400">Memuat...</div>;
 
-  if (false) return (
-    <div className="flex items-center justify-center min-h-screen p-6 text-center">
-      <div className="max-w-md w-full bg-slate-900 border border-slate-800 rounded-2xl p-8">
-        <h1 className="text-2xl font-extrabold text-amber-400 mb-2">WINDIGITAL AI STUDIO</h1>
-        <p className="text-slate-400 text-sm mb-6">21 Studio AI Produk Digital & Paket Produksi Video</p>
-        <button onClick={() => supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: 'https://windigital-app.vercel.app' } })} className="w-full py-3 bg-white text-slate-900 font-bold rounded-xl">Masuk dengan Akun Google</button>
-      </div>
-    </div>
-  );
-
-  if (false) return (
-    <div className="flex items-center justify-center min-h-screen p-6 text-center">
-      <div className="max-w-md w-full bg-slate-900 border border-red-900/50 rounded-2xl p-8">
-        <h2 className="text-xl font-bold text-red-400 mb-2">Akun Belum Aktif</h2>
-        <p className="text-slate-300 text-sm mb-6">Email <b>{user.email}</b> belum terdaftar sebagai member aktif.</p>
-        <a href={BUY_URL} target="_blank" rel="noreferrer" className="block w-full py-3 bg-amber-500 text-slate-950 font-bold rounded-xl mb-3">Aku Mau Beli Sekarang</a>
-        <button onClick={() => supabase.auth.signOut()} className="text-xs text-slate-400 underline">Ganti Akun</button>
-      </div>
-    </div>
-  );
-
   return (
     <div className="max-w-6xl mx-auto p-4 md:p-8">
       <header className="flex justify-between items-center pb-4 border-b border-slate-800 mb-6">
