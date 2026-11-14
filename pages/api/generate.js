@@ -1,18 +1,16 @@
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Metode tidak diizinkan' });
-  }
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Metode salah' });
 
   const { studioName, category, topic, detail } = req.body;
   const apiKey = process.env.GEMINI_API_KEY;
 
   if (!apiKey) {
-    return res.status(500).json({ error: 'GEMINI_API_KEY belum terpasang di Vercel.' });
+    return res.status(500).json({ error: 'GEMINI_API_KEY belum diisi di Settings Vercel.' });
   }
 
   const promptText = category === 'digital'
-    ? 'Kamu adalah ahli pembuat Produk Digital profesional. Buat naskah lengkap per halaman/bagian untuk produk "' + studioName + '" dengan topik "' + topic + '" dan detail tambahan "' + detail + '". Tulis dalam bahasa Indonesia yang rapi dan siap diterbitkan.'
-    : 'Kamu adalah Sutradara & Penulis Naskah Video AI profesional. Buat Paket Produksi Video untuk "' + studioName + '" dengan topik "' + topic + '" dan detail "' + detail + '". Formatkan setiap adegan berisi: 1. Naskah Voiceover (Bahasa Indonesia), 2. Teks Layar, dan 3. Prompt Visual (Bahasa Inggris detail).';
+    ? 'Buat naskah lengkap Produk Digital "' + studioName + '" topik "' + topic + '". Detail: ' + detail + '. Tulis rapi bahasa Indonesia.'
+    : 'Buat naskah video AI "' + studioName + '" topik "' + topic + '". Detail: ' + detail + '. Berisi: 1. Voiceover (Indonesia), 2. Teks Layar, 3. Prompt Visual (Inggris).';
 
   try {
     const response = await fetch(
@@ -20,23 +18,18 @@ export default async function handler(req, res) {
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: promptText }] }]
-        })
+        body: JSON.stringify({ contents: [{ parts: [{ text: promptText }] }] })
       }
     );
 
     const data = await response.json();
     if (!response.ok) {
-      return res.status(500).json({ error: data.error?.message || 'Gagal memproses AI' });
+      return res.status(500).json({ error: data.error?.message || 'API Key ditolak Google' });
     }
 
-    const firstCandidate = Array.isArray(data.candidates) ? data.candidates.at(0) : null;
-    const firstPart = Array.isArray(firstCandidate?.content?.parts) ? firstCandidate.content.parts.at(0) : null;
-    const resultText = firstPart?.text || 'Tidak ada hasil.';
-
-    return res.status(200).json({ result: resultText });
+    const hasil = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Tidak ada hasil.';
+    return res.status(200).json({ result: hasil });
   } catch (err) {
-    return res.status(500).json({ error: 'Terjadi kesalahan koneksi server.' });
+    return res.status(500).json({ error: 'Detail Error: ' + err.message });
   }
 }
