@@ -43,19 +43,6 @@ export default function Home() {
   const [wait, setWait] = useState(0);
 
   useEffect(() => {
-    const check = async (u) => {
-      if (!u) { setUser(null); setApproved(false); setLoading(false); return; }
-      setUser(u);
-      const { data } = await supabase.from('approved_users').select('email').ilike('email', u.email.trim()).maybeSingle();
-      setApproved(!!data);
-      setLoading(false);
-    };
-    supabase.auth.getSession().then(({ data }) => check(data?.session?.user));
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => check(s?.user));
-    return () => sub.subscription.unsubscribe();
-  }, []);
-
-  useEffect(() => {
     const saved = localStorage.getItem('wd_user');
     if (saved) verifyEmail(saved);
 
