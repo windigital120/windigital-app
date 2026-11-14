@@ -56,15 +56,25 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (wait <= 0) return;
-    const t = setInterval(() => setWait((w) => w - 1), 1000);
-    return () => clearInterval(t);
-  }, [wait]);
+    const saved = localStorage.getItem('wd_user');
+    if (saved) verifyEmail(saved);
 
-  async function checkUser(u) {
-    if (!u) { setUser(null); setApproved(null); setLoading(false); return; }
-    setUser(u);
-    const { data } = await supabase.from('approved_users').select('email').eq('email', u.email).maybeSingle();
+    supabase.auth.getSession().then(({ data }) => {
+      if (data?.session?.user?.email) verifyEmail(data.session.user.email);
+      else if (!saved) setLoading(false);
+    });
+
+    const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => {
+      if (s?.user?.email) verifyEmail(s.user.email);
+    });
+    return () => sub.subscription.unsubscribe();
+  }, []);
+
+  async function verifyEmail(mail) {
+    const clean = mail.trim().toLowerCase();
+    localStorage.setItem('wd_user', clean);
+    setUser({ email: clean });
+    const { data } = await supabase.from('approved_users').select('email').ilike('email', clean).maybeSingle();
     setApproved(!!data);
     setLoading(false);
   }
