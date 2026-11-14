@@ -108,7 +108,7 @@ export default function Home() {
       <div className="max-w-md w-full bg-slate-900 border border-slate-800 rounded-2xl p-8">
         <h1 className="text-2xl font-extrabold text-amber-400 mb-2">WINDIGITAI AI STUDIO</h1>
         <p className="text-slate-400 text-sm mb-6">21 Studio AI Produk Digital & Paket Produksi Video</p>
-        <button onClick={() => supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.origin } })} className="w-full py-3 bg-white text-slate-900 font-bold rounded-xl">Masuk dengan Akun Google</button>
+        <button onClick={() => supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: 'https://windigital-app.vercel.app' } })} className="w-full py-3 bg-white text-slate-900 font-bold rounded-xl">Masuk dengan Akun Google</button>
       </div>
     </div>
   );
