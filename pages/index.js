@@ -146,7 +146,7 @@ export default function Home() {
       <header className="flex justify-between items-center pb-4 border-b border-slate-800 mb-6">
         <div>
           <h1 className="text-xl font-extrabold text-amber-400">WINDIGITAL AI STUDIO</h1>
-          <p className="text-xs text-emerald-400">Unlimited Member • {user.email}</p>
+          <p className="text-xs text-emerald-400">Unlimited Member • {VIP}</p>
         </div>
         <button onClick={() => supabase.auth.signOut()} className="px-3 py-1.5 text-xs bg-slate-800 rounded-lg">Keluar</button>
       </header>
